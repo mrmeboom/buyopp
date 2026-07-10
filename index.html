@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>The Secret Sherry Society — Allocations</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      background-color: #0b0b0b;
+      color: #ffffff;
+      padding: 20px 16px 160px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-top: 10px;
+    }
+
+    header h1 {
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 3px;
+      color: #ffffff;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    header p {
+      font-weight: 300;
+      font-size: 12px;
+      color: #d4af37;
+      letter-spacing: 1px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin: 24px 0 10px 4px;
+      border-left: 2px solid #d4af37;
+      padding-left: 8px;
+    }
+
+    .grid-container {
+      background: #121212;
+      border-radius: 8px;
+      border: 1px solid #222;
+      overflow: hidden;
+    }
+
+    .wine-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .wine-row:last-child {
+      border-bottom: none;
+    }
+
+    .wine-details {
+      flex: 1;
+      min-width: 0;
+      padding-right: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 12px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    .wine-meta {
+      font-weight: 300;
+      color: #888;
+      font-size: 11px;
+    }
+
+    .right-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .wine-price {
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 13px;
+      text-align: right;
+      min-width: 65px;
+    }
+
+    .qty-container {
+      display: flex;
+      align-items: center;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 6px;
+      height: 32px;
+    }
+
+    .qty-btn {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      width: 32px;
+      height: 100%;
+      font-size: 14px;
+      font-weight: 400;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-btn:active {
+      background: #2a2a2a;
+      color: #d4af37;
+    }
+
+    .qty-val {
+      width: 28px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .client-form {
+      background: #121212;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 24px;
+    }
+
+    .form-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    .input-group {
+      margin-bottom: 10px;
+    }
+
+    .input-group:last-child {
+      margin-bottom: 0;
+    }
+
+    input {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      padding: 10px;
+      border-radius: 6px;
+      color: #ffffff;
+      font-size: 12px;
+    }
+
+    input:focus {
+      border-color: #d4af37;
+      outline: none;
+    }
+
+    .footer-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #000000;
+      border-top: 1px solid #222;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+      z-index: 100;
+    }
+
+    .total-box {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .total-row {
+      font-size: 11px;
+      color: #888;
+      font-weight: 400;
+    }
+
+    .total-row span {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .total-main {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 2px;
+    }
+
+    .total-main span {
+      color: #d4af37;
+    }
+
+    .submit-btn {
+      background: #ffffff;
+      color: #000000;
+      border: none;
+      padding: 12px 24px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 6px;
+      cursor: pointer;
+      height: 44px;
+    }
+
+    .submit-btn:disabled {
+      background: #444;
+      color: #888;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>The Secret Sherry Society</h1>
+    <p>Buying Opportunity Allocation</p>
+  </header>
+
+  <div id="allocation-list"></div>
+
+  <div class="client-form">
+    <div class="form-title">Delivery Details</div>
+    <div class="input-group"><input type="text" id="form-name" placeholder="Full Name *" required></div>
+    <div class="input-group"><input type="text" id="form-company" placeholder="Company Name (Optional)"></div>
+    <div class="input-group"><input type="text" id="form-contact" placeholder="WhatsApp / Phone or Email *" required>
+    </div>
+    <div class="input-group"><input type="text" id="form-address" placeholder="Shipping Address *"></div>
+    <div class="input-group"><input type="text" id="form-postal" placeholder="Postal Code & City *"></div>
+  </div>
+
+  <div class="footer-bar">
+    <div class="total-box">
+      <div class="total-row">Excl. VAT: <span id="total-ex-vat">€0.00</span></div>
+      <div class="total-row">21% VAT: <span id="total-vat">€0.00</span></div>
+      <div class="total-main">Total: <span id="total-inc-vat">€0.00</span></div>
+    </div>
+    <button class="submit-btn" onclick="submitAllocation()">Submit Order</button>
+  </div>
+
+  <script>
+    // Paste your deployed Google Web App URL here
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5JyabcgIzuxs1xVng8xxmJbYfyUsD0hoyC0FHrFxkfb4i1U80ijSB6V6iv-YMGY4Y/exec";
+
+    const wineData = [
+      { "bodega": "Alonso", "range": "VELO FLOR", "type": "Manzanilla", "cl": "75", "price": 29.7 },
+      { "bodega": "Alonso", "range": "VELO FLOR", "type": "Manzanilla", "cl": "150", "price": 90.0 },
+      { "bodega": "Alonso", "range": "1/15", "type": "Amontillado", "cl": "50", "price": 97.14 },
+      { "bodega": "Alonso", "range": "1/8", "type": "Palo Cortado", "cl": "50", "price": 97.14 },
+      { "bodega": "Alonso", "range": "1/14", "type": "Oloroso", "cl": "50", "price": 97.14 },
+      { "bodega": "Barrialto", "range": "Aranza", "type": "Still wine", "cl": "75", "price": 13.98 },
+      { "bodega": "Barrialto", "range": "Santa Brígida", "type": "Still wine", "cl": "75", "price": 16.14 },
+      { "bodega": "Barrialto", "range": "Azacanes", "type": "Still wine", "cl": "75", "price": 17.94 },
+      { "bodega": "del Río", "range": "Casilla verde", "type": "Still wine", "cl": "75", "price": 11.64 },
+      { "bodega": "del Río", "range": "Solera Playa Azul", "type": "Manzanilla", "cl": "37.5", "price": 10.5 },
+      { "bodega": "del Río", "range": "Solera Playa Azul", "type": "Manzanilla", "cl": "75", "price": 14.94 },
+      { "bodega": "del Río", "range": "Solera Playa Azul", "type": "Manzanilla", "cl": "150", "price": 27.42 },
+      { "bodega": "del Río", "range": "Solera Playa Oro", "type": "Manzanilla", "cl": "75", "price": 19.38 },
+      { "bodega": "del Río", "range": "Solera Playa Oro", "type": "Manzanilla", "cl": "150", "price": 36.0 },
+      { "bodega": "del Río", "range": "Solera Playa Marea Baja", "type": "Manzanilla", "cl": "75", "price": 19.38 },
+      { "bodega": "del Río", "range": "El Cuartito", "type": "Oloroso", "cl": "50", "price": 19.2 },
+      { "bodega": "Barbadillo", "range": "Alba Baina", "type": "Still wine", "cl": "75", "price": 12.6 },
+      { "bodega": "Barbadillo", "range": "Mirabras", "type": "Still wine", "cl": "75", "price": 18.6 },
+      { "bodega": "Barbadillo", "range": "AS de Mirabras", "type": "Still wine", "cl": "75", "price": 13.8 },
+      { "bodega": "Barbadillo", "range": "Sábalo", "type": "Still wine", "cl": "75", "price": 13.8 },
+      { "bodega": "Barbadillo", "range": "Patinegro", "type": "Still wine", "cl": "75", "price": 16.2 },
+      { "bodega": "Barbadillo", "range": "Tamarix", "type": "Still wine", "cl": "75", "price": 13.8 },
+      { "bodega": "Barbadillo", "range": "Arboledilla Levante", "type": "Manzanilla", "cl": "75", "price": 18.6 },
+      { "bodega": "Barbadillo", "range": "Arboledilla Poniente", "type": "Manzanilla", "cl": "75", "price": 18.6 },
+      { "bodega": "Barbadillo", "range": "AS de Mirabras Sumatorio", "type": "Manzanilla", "cl": "75", "price": 27.0 },
+      { "bodega": "Barbadillo", "range": "Nave Trinidad en rama", "type": "Manzanilla", "cl": "37.5", "price": 13.14 },
+      { "bodega": "Barbadillo", "range": "Nave Trinidad en rama", "type": "Manzanilla", "cl": "75", "price": 21.54 },
+      { "bodega": "Barbadillo", "range": "Salicornia", "type": "Manzanilla", "cl": "75", "price": 15.54 },
+      { "bodega": "Barbadillo", "range": "Solear", "type": "Manzanilla", "cl": "37.5", "price": 9.72 },
+      { "bodega": "Barbadillo", "range": "Solear", "type": "Manzanilla", "cl": "75", "price": 13.08 },
+      { "bodega": "Barbadillo", "range": "Solear seasonal saca", "type": "Manzanilla pasada", "cl": "37.5", "price": 14.04 },
+      { "bodega": "Barbadillo", "range": "Pastora", "type": "Manzanilla pasada", "cl": "37.5", "price": 14.04 },
+      { "bodega": "Barbadillo", "range": "Pastora", "type": "Manzanilla pasada", "cl": "75", "price": 21.54 },
+      { "bodega": "Barbadillo", "range": "Pastora", "type": "Manzanilla pasada", "cl": "150", "price": 38.34 },
+      { "bodega": "Barbadillo", "range": "Pastora", "type": "Manzanilla pasada", "cl": "300", "price": 70.74 },
+      { "bodega": "Barbadillo", "range": "Criadera Selection En rama", "type": "Amontillado", "cl": "75", "price": 15.0 },
+      { "bodega": "Barbadillo", "range": "Criadera Selection En rama", "type": "Oloroso", "cl": "75", "price": 15.0 },
+      { "bodega": "Barbadillo", "range": "Criadera Selection En rama", "type": "Palo Cortado", "cl": "75", "price": 15.0 },
+      { "bodega": "Barbadillo", "range": "Principe", "type": "Amontillado", "cl": "37.5", "price": 16.44 },
+      { "bodega": "Barbadillo", "range": "Obispo Gascón", "type": "Palo Cortado", "cl": "37.5", "price": 19.5 },
+      { "bodega": "Barbadillo", "range": "Cuco", "type": "Oloroso", "cl": "37.5", "price": 16.44 },
+      { "bodega": "Barbadillo", "range": "San Rafael", "type": "Medium", "cl": "37.5", "price": 13.14 },
+      { "bodega": "Barbadillo", "range": "Eva", "type": "Cream", "cl": "75", "price": 12.6 },
+      { "bodega": "Barbadillo", "range": "Laura", "type": "Moscatel", "cl": "37.5", "price": 13.14 },
+      { "bodega": "Barbadillo", "range": "La Cilla", "type": "Pedro Ximénez", "cl": "37.5", "price": 14.04 },
+      { "bodega": "Barbadillo", "range": "de Jerez Reserva", "type": "Vinagre", "cl": "25", "price": 11.4 },
+      { "bodega": "Barbadillo", "range": "de Jerez Ecological", "type": "Vinagre", "cl": "25", "price": 11.4 },
+      { "bodega": "Barbadillo", "range": "de Jerez with PX", "type": "Vinagre", "cl": "25", "price": 11.4 },
+      { "bodega": "Barbadillo", "range": "de Jerez with Moscatel", "type": "Vinagre", "cl": "25", "price": 11.4 }
+    ];
+
+    let orderQuantities = {};
+    const listContainer = document.getElementById('allocation-list');
+    const grouped = {};
+
+    wineData.forEach((wine, idx) => {
+      if (!grouped[wine.bodega]) grouped[wine.bodega] = [];
+      grouped[wine.bodega].push({ ...wine, id: idx });
+    });
+
+    for (const bodega in grouped) {
+      const section = document.createElement('div');
+      section.innerHTML = `<div class="section-title">Bodegas ${bodega}</div>`;
+      const grid = document.createElement('div');
+      grid.className = 'grid-container';
+
+      grouped[bodega].forEach(wine => {
+        const row = document.createElement('div');
+        row.className = 'wine-row';
+        row.innerHTML = `
+          <div class="wine-details">
+            ${wine.range} <span class="wine-meta">(${wine.type}, ${wine.cl}cl)</span>
+          </div>
+          <div class="right-controls">
+            <div class="wine-price">&euro;${wine.price.toFixed(2)}</div>
+            <div class="qty-container">
+              <button class="qty-btn" onclick="updateQty(${wine.id}, -1)">&minus;</button>
+              <span class="qty-val" id="qty-${wine.id}">0</span>
+              <button class="qty-btn" onclick="updateQty(${wine.id}, 1)">&plus;</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(row);
+      });
+      section.appendChild(grid);
+      listContainer.appendChild(section);
+    }
+
+    function updateQty(id, delta) {
+      let current = orderQuantities[id] || 0;
+      current += delta;
+      if (current < 0) current = 0;
+      orderQuantities[id] = current;
+      document.getElementById(`qty-${id}`).innerText = current;
+      calculateTotal();
+    }
+
+    function calculateTotal() {
+      let totalExVat = 0;
+      for (const id in orderQuantities) {
+        if (orderQuantities[id] > 0) {
+          totalExVat += orderQuantities[id] * wineData[id].price;
+        }
+      }
+      let vatAmount = totalExVat * 0.21;
+      let totalIncVat = totalExVat + vatAmount;
+
+      document.getElementById('total-ex-vat').innerText = `&euro;${totalExVat.toFixed(2)}`;
+      document.getElementById('total-vat').innerText = `&euro;${vatAmount.toFixed(2)}`;
+      document.getElementById('total-inc-vat').innerText = `&euro;${totalIncVat.toFixed(2)}`;
+    }
+
+    function submitAllocation() {
+      const name = document.getElementById('form-name').value.trim();
+      const company = document.getElementById('form-company').value.trim();
+      const contact = document.getElementById('form-contact').value.trim();
+      const address = document.getElementById('form-address').value.trim();
+      const postal = document.getElementById('form-postal').value.trim();
+
+      if (!name || !contact || !address || !postal) {
+        alert('Please complete all required fields (*).');
+        return;
+      }
+
+      const itemsArray = [];
+      let totalExVat = 0;
+      for (const id in orderQuantities) {
+        if (orderQuantities[id] > 0) {
+          const w = wineData[id];
+          itemsArray.push(`${orderQuantities[id]}x Bodegas ${w.bodega} - ${w.range} (${w.type}, ${w.cl}cl)`);
+          totalExVat += orderQuantities[id] * w.price;
+        }
+      }
+
+      if (totalExVat === 0) {
+        alert('Please select at least one item.');
+        return;
+      }
+
+      const btn = document.querySelector('.submit-btn');
+      btn.innerText = 'Sending...';
+      btn.disabled = true;
+
+      const payload = {
+        name: name,
+        company: company,
+        contact: contact,
+        address: address,
+        postal: postal,
+        itemsList: itemsArray.join(', '),
+        totalExVat: totalExVat,
+        vat: totalExVat * 0.21,
+        totalIncVat: totalExVat * 1.21
+      };
+
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(() => {
+          alert('Thank you! Your selection has been submitted successfully.');
+          location.reload();
+        })
+        .catch(err => {
+          alert('There was a submission error. Please try again.');
+          btn.innerText = 'Submit Order';
+          btn.disabled = false;
+        });
+    }
+  </script>
+</body>
+
+</html>
