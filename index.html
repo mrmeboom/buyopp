@@ -4,9 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>The Secret Sherry Society — Allocations</title>
+  <title>TSSS - Buyopp July 26</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
+    .logo {
+      display: block;
+      margin: 0 auto 16px auto;
+      max-height: 80px;
+      width: auto;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -146,8 +153,9 @@
       border: 1px solid #222;
       border-radius: 8px;
       padding: 16px;
-      margin-top: 24px;
+      margin-bottom: 24px;
     }
+
 
     .form-title {
       font-size: 12px;
@@ -243,17 +251,58 @@
       color: #888;
       cursor: not-allowed;
     }
+
+    .bodega-desc {
+      font-size: 11px;
+      color: #888;
+      margin: -4px 0 12px 4px;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    .grid-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-bottom: 1px solid #1a1a1a;
+      background: #161616;
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #666;
+    }
+
+    .header-details {
+      flex: 1;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header-price {
+      min-width: 65px;
+      text-align: right;
+    }
+
+    .header-qty {
+      width: 94px;
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
 
   <header>
+    <img src="logo.png" alt="Logo" class="logo">
     <h1>The Secret Sherry Society</h1>
-    <p>Buying Opportunity Allocation</p>
+    <p>Buying opportunity July 26</p>
   </header>
-
-  <div id="allocation-list"></div>
 
   <div class="client-form">
     <div class="form-title">Delivery Details</div>
@@ -265,11 +314,13 @@
     <div class="input-group"><input type="text" id="form-postal" placeholder="Postal Code & City *"></div>
   </div>
 
+  <div id="allocation-list"></div>
+
   <div class="footer-bar">
     <div class="total-box">
-      <div class="total-row">Excl. VAT: <span id="total-ex-vat">€0.00</span></div>
-      <div class="total-row">21% VAT: <span id="total-vat">€0.00</span></div>
-      <div class="total-main">Total: <span id="total-inc-vat">€0.00</span></div>
+      <div style="font-size: 12px; color: #888; font-weight: 400;">
+        Excl. VAT: <span id="total-ex-vat" style="color: #ffffff; font-weight: 600;">€0.00</span> | Incl. VAT: <span id="total-inc-vat" style="color: #d4af37; font-weight: 700;">€0.00</span>
+      </div>
     </div>
     <button class="submit-btn" onclick="submitAllocation()">Submit Order</button>
   </div>
@@ -341,9 +392,23 @@
 
     for (const bodega in grouped) {
       const section = document.createElement('div');
-      section.innerHTML = `<div class="section-title">Bodegas ${bodega}</div>`;
+      section.innerHTML = `
+        <div class="section-title">Bodegas ${bodega}</div>
+        <p class="bodega-desc">Add context here for Bodegas ${bodega}...</p>
+      `;
       const grid = document.createElement('div');
       grid.className = 'grid-container';
+
+      const headerRow = document.createElement('div');
+      headerRow.className = 'grid-header';
+      headerRow.innerHTML = `
+        <div class="header-details">Wine</div>
+        <div class="header-controls">
+          <div class="header-price">Price (ex VAT)</div>
+          <div class="header-qty">Quantity</div>
+        </div>
+      `;
+      grid.appendChild(headerRow);
 
       grouped[bodega].forEach(wine => {
         const row = document.createElement('div');
@@ -386,9 +451,8 @@
       let vatAmount = totalExVat * 0.21;
       let totalIncVat = totalExVat + vatAmount;
 
-      document.getElementById('total-ex-vat').innerText = `&euro;${totalExVat.toFixed(2)}`;
-      document.getElementById('total-vat').innerText = `&euro;${vatAmount.toFixed(2)}`;
-      document.getElementById('total-inc-vat').innerText = `&euro;${totalIncVat.toFixed(2)}`;
+      document.getElementById('total-ex-vat').innerText = `€${totalExVat.toFixed(2)}`;
+      document.getElementById('total-inc-vat').innerText = `€${totalIncVat.toFixed(2)}`;
     }
 
     function submitAllocation() {
