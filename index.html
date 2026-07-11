@@ -319,7 +319,8 @@
   <div class="footer-bar">
     <div class="total-box">
       <div style="font-size: 12px; color: #888; font-weight: 400;">
-        Excl. VAT: <span id="total-ex-vat" style="color: #ffffff; font-weight: 600;">€0.00</span> | Incl. VAT: <span id="total-inc-vat" style="color: #d4af37; font-weight: 700;">€0.00</span>
+        Excl. VAT: <span id="total-ex-vat" style="color: #ffffff; font-weight: 600;">€0.00</span> | Incl. VAT: <span
+          id="total-inc-vat" style="color: #d4af37; font-weight: 700;">€0.00</span>
       </div>
     </div>
     <button class="submit-btn" onclick="submitAllocation()">Submit Order</button>
@@ -381,6 +382,13 @@
       { "bodega": "Barbadillo", "range": "de Jerez with Moscatel", "type": "Vinagre", "cl": "25", "price": 11.4 }
     ];
 
+    const bodegaDescriptions = {
+      "Alonso": "Boutique producer specialising in rare, very old Sherries. Made in historic solera systems purchased from legendary, defunct Sherry houses",
+      "Barrialto": "Micro winery from Sanlúcar. On perhaps 40 square meters Rafael Rodríguez makes incredibly elegant still wines from old Palomino vines in ex-Manzanilla casks.",
+      "del Río": "On the mouth of the Guadalquivir, Luis and his family are making some of the most stylish, sophisticated aged Manzanillas of the region.",
+      "Barbadillo": "A classic Sanlúcar Bodega turned progressive. Their experimental and remarkable expressions are a delight for every curious wine drinker."
+    };
+
     let orderQuantities = {};
     const listContainer = document.getElementById('allocation-list');
     const grouped = {};
@@ -391,10 +399,11 @@
     });
 
     for (const bodega in grouped) {
+      const desc = bodegaDescriptions[bodega] !== undefined ? bodegaDescriptions[bodega] : `Add context here for Bodegas ${bodega}...`;
       const section = document.createElement('div');
       section.innerHTML = `
         <div class="section-title">Bodegas ${bodega}</div>
-        <p class="bodega-desc">Add context here for Bodegas ${bodega}...</p>
+        ${desc ? `<p class="bodega-desc">${desc}</p>` : ''}
       `;
       const grid = document.createElement('div');
       grid.className = 'grid-container';
