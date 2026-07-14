@@ -141,11 +141,27 @@
     }
 
     .qty-val {
-      width: 28px;
+      width: 30px;
+      height: 100%;
+      background: transparent;
+      border: none;
       text-align: center;
       font-size: 12px;
       font-weight: 600;
       color: #ffffff;
+      outline: none;
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .qty-val::-webkit-outer-spin-button,
+    .qty-val::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .qty-val[type=number] {
+      -moz-appearance: textfield;
     }
 
     .client-form {
@@ -430,7 +446,7 @@
             <div class="wine-price">&euro;${wine.price.toFixed(2)}</div>
             <div class="qty-container">
               <button class="qty-btn" onclick="updateQty(${wine.id}, -1)">&minus;</button>
-              <span class="qty-val" id="qty-${wine.id}">0</span>
+              <input type="number" class="qty-val" id="qty-${wine.id}" min="0" value="0" oninput="handleInputQty(${wine.id}, this.value)" onblur="sanitizeInputQty(this, ${wine.id})">
               <button class="qty-btn" onclick="updateQty(${wine.id}, 1)">&plus;</button>
             </div>
           </div>
@@ -446,8 +462,21 @@
       current += delta;
       if (current < 0) current = 0;
       orderQuantities[id] = current;
-      document.getElementById(`qty-${id}`).innerText = current;
+      document.getElementById(`qty-${id}`).value = current;
       calculateTotal();
+    }
+
+    function handleInputQty(id, value) {
+      let val = parseInt(value, 10);
+      if (isNaN(val) || val < 0) val = 0;
+      orderQuantities[id] = val;
+      calculateTotal();
+    }
+
+    function sanitizeInputQty(el, id) {
+      let val = parseInt(el.value, 10);
+      if (isNaN(val) || val < 0) val = 0;
+      el.value = val;
     }
 
     function calculateTotal() {
