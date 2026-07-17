@@ -62,25 +62,21 @@
 
     /* ── Filter chips ──────────────────────────────── */
     .filters-bar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: #0b0b0b;
       padding: 10px 0 12px;
       margin-bottom: 4px;
       border-bottom: 1px solid #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-row {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
       gap: 6px;
-    }
-
-    .filter-separator {
-      color: #333;
-      font-size: 11px;
-      margin: 0 4px;
-      user-select: none;
     }
 
     .chip {
@@ -603,7 +599,7 @@
 
     // ── State ─────────────────────────────────────────────────────────────
     let orderQuantities = {};
-    let activeFilters = { bodega: new Set(), type: new Set(), size: new Set() };
+    let activeFilters = { bodega: new Set(), type: new Set() };
 
     // ── Group wines by bodega ─────────────────────────────────────────────
     const grouped = {};
@@ -678,15 +674,12 @@
     const bodegas = Object.keys(grouped);
     // Custom sorted types: Still wine goes before Manzanilla. Manzanilla pasada is removed/merged.
     const types = ['Still wine', 'Manzanilla', 'Amontillado', 'Palo Cortado', 'Oloroso', 'Medium', 'Cream', 'Moscatel', 'Pedro Ximénez', 'Vinagre'];
-    const sizes = [...new Set(wineData.map(w => w.cl))].sort((a, b) => parseFloat(a) - parseFloat(b));
 
-    function appendFilterGroup(items, filterKey) {
-      const container = document.getElementById('filters-bar');
-
+    function appendFilterGroup(items, filterKey, rowEl) {
       items.forEach(item => {
         const chip = document.createElement('button');
         chip.className = 'chip';
-        chip.textContent = filterKey === 'size' ? `${item}cl` : item;
+        chip.textContent = item;
         chip.dataset.value = item;
         chip.setAttribute('aria-pressed', 'false');
         chip.addEventListener('click', () => {
@@ -702,25 +695,22 @@
           }
           applyFilters();
         });
-        container.appendChild(chip);
+        rowEl.appendChild(chip);
       });
     }
 
-    appendFilterGroup(bodegas, 'bodega');
+    const filtersBar = document.getElementById('filters-bar');
+    const bodegaRow = document.createElement('div');
+    bodegaRow.className = 'filter-row';
+    bodegaRow.setAttribute('aria-label', 'Filter by bodega');
+    appendFilterGroup(bodegas, 'bodega', bodegaRow);
+    filtersBar.appendChild(bodegaRow);
 
-    const sep1 = document.createElement('span');
-    sep1.className = 'filter-separator';
-    sep1.textContent = '|';
-    document.getElementById('filters-bar').appendChild(sep1);
-
-    appendFilterGroup(types, 'type');
-
-    const sep2 = document.createElement('span');
-    sep2.className = 'filter-separator';
-    sep2.textContent = '|';
-    document.getElementById('filters-bar').appendChild(sep2);
-
-    appendFilterGroup(sizes, 'size');
+    const typeRow = document.createElement('div');
+    typeRow.className = 'filter-row';
+    typeRow.setAttribute('aria-label', 'Filter by type');
+    appendFilterGroup(types, 'type', typeRow);
+    filtersBar.appendChild(typeRow);
 
     function applyFilters() {
       document.querySelectorAll('[data-bodega]').forEach(section => {
@@ -729,15 +719,14 @@
 
         section.querySelectorAll('.wine-row').forEach(row => {
           const matchBodega = activeFilters.bodega.size === 0 || activeFilters.bodega.has(bodega);
-          
+
           let rowType = row.dataset.type;
           if (rowType === 'Manzanilla pasada') {
             rowType = 'Manzanilla';
           }
-          
+
           const matchType = activeFilters.type.size === 0 || activeFilters.type.has(rowType);
-          const matchSize = activeFilters.size.size === 0 || activeFilters.size.has(row.dataset.size);
-          const visible = matchBodega && matchType && matchSize;
+          const visible = matchBodega && matchType;
           row.style.display = visible ? '' : 'none';
           if (visible) sectionVisible = true;
         });
