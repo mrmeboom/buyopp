@@ -366,11 +366,7 @@
       margin-bottom: 12px;
     }
 
-    .input-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
+
 
     .input-group {
       margin-bottom: 10px;
@@ -514,12 +510,10 @@
     <div class="input-group"><input type="text" id="form-name" placeholder="Full Name *" autocomplete="name"></div>
     <div class="input-group"><input type="text" id="form-company" placeholder="Company Name (Optional)"
         autocomplete="organization"></div>
-    <div class="input-row">
-      <div class="input-group" style="margin-bottom:0;"><input type="tel" id="form-phone"
-          placeholder="WhatsApp / Phone *" autocomplete="tel"></div>
-      <div class="input-group" style="margin-bottom:0;"><input type="email" id="form-email" placeholder="Email *"
-          autocomplete="email"></div>
-    </div>
+    <div class="input-group"><input type="tel" id="form-phone"
+        placeholder="WhatsApp / Phone *" autocomplete="tel"></div>
+    <div class="input-group"><input type="email" id="form-email" placeholder="Email *"
+        autocomplete="email"></div>
     <div class="input-group"><input type="text" id="form-address" placeholder="Shipping Address *"
         autocomplete="street-address"></div>
     <div class="input-group"><input type="text" id="form-postal" placeholder="Postal Code &amp; City *"
@@ -890,13 +884,8 @@
       const address = document.getElementById('form-address').value.trim();
       const postal = document.getElementById('form-postal').value.trim();
 
-      if (!name || !address || !postal) {
-        alert('Please complete all required fields (*).');
-        return;
-      }
-
-      if (!phone || !email) {
-        alert('Please fill in your contact details before submitting.');
+      if (!name || !phone || !email || !address || !postal) {
+        alert('Please complete your contact details.');
         return;
       }
 
