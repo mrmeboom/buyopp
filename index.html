@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>TSSS - Buyopp July 26</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TSSS — Buying Opportunity July 26</title>
+  <meta name="description"
+    content="The Secret Sherry Society buying opportunity July 26 — browse and order from Alonso, Barrialto, del Río and Barbadillo.">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     .logo {
@@ -43,13 +45,66 @@
       text-transform: uppercase;
     }
 
-    header p {
+    header .buyopp-title {
       font-weight: 300;
       font-size: 12px;
       color: #d4af37;
       letter-spacing: 1px;
     }
 
+    .deadline-text {
+      font-weight: 300;
+      font-size: 11px;
+      color: #9a9a9a;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* ── Filter chips ──────────────────────────────── */
+    .filters-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #0b0b0b;
+      padding: 10px 0 12px;
+      margin-bottom: 4px;
+      border-bottom: 1px solid #1a1a1a;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .filter-separator {
+      color: #333;
+      font-size: 11px;
+      margin: 0 4px;
+      user-select: none;
+    }
+
+    .chip {
+      background: #1a1a1a;
+      border: 1px solid #2e2e2e;
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 10px;
+      font-weight: 500;
+      color: #9a9a9a;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+      white-space: nowrap;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .chip.active {
+      background: rgba(212, 175, 55, 0.12);
+      border-color: #d4af37;
+      color: #d4af37;
+    }
+
+    /* ── Section / grid ────────────────────────────── */
     .section-title {
       font-size: 13px;
       font-weight: 700;
@@ -61,6 +116,14 @@
       padding-left: 8px;
     }
 
+    .bodega-desc {
+      font-size: 11px;
+      color: #9a9a9a;
+      margin: -4px 0 12px 4px;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
     .grid-container {
       background: #121212;
       border-radius: 8px;
@@ -68,25 +131,64 @@
       overflow: hidden;
     }
 
+    .grid-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-bottom: 1px solid #1a1a1a;
+      background: #161616;
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #666;
+    }
+
+    .header-details {
+      flex: 1;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header-price {
+      min-width: 65px;
+      text-align: right;
+    }
+
+    .header-qty {
+      width: 132px;
+      text-align: center;
+    }
+
+    /* ── Wine rows ─────────────────────────────────── */
     .wine-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 12px;
       border-bottom: 1px solid #1a1a1a;
+      border-left: 3px solid transparent;
+      transition: border-left-color 0.18s ease, background 0.18s ease;
     }
 
     .wine-row:last-child {
       border-bottom: none;
     }
 
+    .wine-row.has-qty {
+      border-left-color: #d4af37;
+      background: rgba(212, 175, 55, 0.04);
+    }
+
     .wine-details {
       flex: 1;
       min-width: 0;
       padding-right: 12px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       font-size: 12px;
       font-weight: 500;
       color: #ffffff;
@@ -94,7 +196,7 @@
 
     .wine-meta {
       font-weight: 300;
-      color: #888;
+      color: #9a9a9a;
       font-size: 11px;
     }
 
@@ -112,20 +214,21 @@
       min-width: 65px;
     }
 
+    /* ── Quantity controls ─────────────────────────── */
     .qty-container {
       display: flex;
       align-items: center;
       background: #1a1a1a;
       border: 1px solid #333;
       border-radius: 6px;
-      height: 32px;
+      height: 44px;
     }
 
     .qty-btn {
       background: transparent;
       border: none;
       color: #ffffff;
-      width: 32px;
+      width: 44px;
       height: 100%;
       font-size: 14px;
       font-weight: 400;
@@ -164,14 +267,95 @@
       -moz-appearance: textfield;
     }
 
+    /* ── Order summary table ───────────────────────── */
+    .order-summary {
+      background: #121212;
+      border-radius: 8px;
+      border: 1px solid #222;
+      padding: 16px;
+      margin-top: 24px;
+      margin-bottom: 0;
+    }
+
+    .order-summary-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    .order-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .order-table th {
+      text-align: left;
+      font-weight: 600;
+      color: #9a9a9a;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0 0 8px;
+      border-bottom: 1px solid #222;
+    }
+
+    .order-table th.th-qty,
+    .order-table td.td-qty {
+      text-align: center;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    .order-table th.th-total,
+    .order-table td.td-total {
+      text-align: right;
+    }
+
+    .order-table td {
+      padding: 8px 0;
+      border-bottom: 1px solid #1a1a1a;
+      color: #ffffff;
+      vertical-align: top;
+    }
+
+    .order-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .td-wine {
+      font-weight: 500;
+    }
+
+    .td-meta {
+      color: #9a9a9a;
+      font-weight: 300;
+      font-size: 10px;
+      margin-top: 2px;
+    }
+
+    .td-qty {
+      color: #9a9a9a;
+    }
+
+    .td-total {
+      color: #d4af37;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ── Client form ───────────────────────────────── */
     .client-form {
       background: #121212;
       border: 1px solid #222;
       border-radius: 8px;
       padding: 16px;
-      margin-bottom: 24px;
+      margin-top: 24px;
+      margin-bottom: 0;
     }
-
 
     .form-title {
       font-size: 12px;
@@ -182,8 +366,15 @@
       margin-bottom: 12px;
     }
 
+    .input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
     .input-group {
       margin-bottom: 10px;
+      flex: 1;
     }
 
     .input-group:last-child {
@@ -205,6 +396,7 @@
       outline: none;
     }
 
+    /* ── Footer bar ────────────────────────────────── */
     .footer-bar {
       position: fixed;
       bottom: 0;
@@ -212,12 +404,18 @@
       right: 0;
       background: #000000;
       border-top: 1px solid #222;
-      padding: 16px 20px;
+      padding: 12px 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+      z-index: 100;
+    }
+
+    .footer-main {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
-      z-index: 100;
     }
 
     .total-box {
@@ -228,24 +426,13 @@
 
     .total-row {
       font-size: 11px;
-      color: #888;
+      color: #9a9a9a;
       font-weight: 400;
     }
 
     .total-row span {
       color: #ffffff;
       font-weight: 600;
-    }
-
-    .total-main {
-      font-size: 18px;
-      font-weight: 700;
-      color: #ffffff;
-      margin-top: 2px;
-    }
-
-    .total-main span {
-      color: #d4af37;
     }
 
     .submit-btn {
@@ -260,6 +447,7 @@
       border-radius: 6px;
       cursor: pointer;
       height: 44px;
+      transition: background 0.18s ease, color 0.18s ease;
     }
 
     .submit-btn:disabled {
@@ -268,46 +456,24 @@
       cursor: not-allowed;
     }
 
-    .bodega-desc {
-      font-size: 11px;
-      color: #888;
-      margin: -4px 0 12px 4px;
-      line-height: 1.4;
+    .submit-btn.submitted {
+      background: #1a3d1a;
+      color: #5fc75f;
+    }
+
+    .submit-helper {
+      font-size: 10px;
+      color: #9a9a9a;
       font-weight: 300;
-    }
-
-    .grid-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      border-bottom: 1px solid #1a1a1a;
-      background: #161616;
-      font-size: 9px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #666;
-    }
-
-    .header-details {
-      flex: 1;
-    }
-
-    .header-controls {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .header-price {
-      min-width: 65px;
       text-align: right;
     }
 
-    .header-qty {
-      width: 104px;
-      text-align: center;
+    .submit-error {
+      font-size: 10px;
+      color: #e05555;
+      font-weight: 400;
+      text-align: right;
+      display: none;
     }
   </style>
 </head>
@@ -315,37 +481,73 @@
 <body>
 
   <header>
-    <img src="logo.png" alt="Logo" class="logo">
+    <img src="logo.png" alt="The Secret Sherry Society logo" class="logo">
     <h1>The Secret Sherry Society</h1>
-    <p>Buying opportunity July 26</p>
+    <p class="buyopp-title">Buying opportunity July 26</p>
+    <p class="deadline-text">Available until 01 Aug 2026</p>
   </header>
 
-  <div class="client-form">
-    <div class="form-title">Delivery Details</div>
-    <div class="input-group"><input type="text" id="form-name" placeholder="Full Name *" required></div>
-    <div class="input-group"><input type="text" id="form-company" placeholder="Company Name (Optional)"></div>
-    <div class="input-group"><input type="text" id="form-contact" placeholder="WhatsApp / Phone or Email *" required>
-    </div>
-    <div class="input-group"><input type="text" id="form-address" placeholder="Shipping Address *"></div>
-    <div class="input-group"><input type="text" id="form-postal" placeholder="Postal Code & City *"></div>
-  </div>
+  <!-- Filter chips -->
+  <div class="filters-bar" id="filters-bar" aria-label="Filter wines"></div>
 
+  <!-- Product list -->
   <div id="allocation-list"></div>
 
-  <div class="footer-bar">
-    <div class="total-box">
-      <div style="font-size: 12px; color: #888; font-weight: 400;">
-        Excl. VAT: <span id="total-ex-vat" style="color: #ffffff; font-weight: 600;">€0.00</span> | Incl. VAT: <span
-          id="total-inc-vat" style="color: #d4af37; font-weight: 700;">€0.00</span>
-      </div>
+  <!-- Order summary (read-only, live) -->
+  <div class="order-summary" id="order-summary" style="display:none;" aria-live="polite">
+    <div class="order-summary-title">Your order</div>
+    <table class="order-table" id="order-table">
+      <thead>
+        <tr>
+          <th>Wine</th>
+          <th class="th-qty">Qty</th>
+          <th class="th-total">Line total</th>
+        </tr>
+      </thead>
+      <tbody id="order-table-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Delivery details (below product list) -->
+  <div class="client-form">
+    <div class="form-title">Delivery Details</div>
+    <div class="input-group"><input type="text" id="form-name" placeholder="Full Name *" autocomplete="name"></div>
+    <div class="input-group"><input type="text" id="form-company" placeholder="Company Name (Optional)"
+        autocomplete="organization"></div>
+    <div class="input-row">
+      <div class="input-group" style="margin-bottom:0;"><input type="tel" id="form-phone"
+          placeholder="WhatsApp / Phone *" autocomplete="tel"></div>
+      <div class="input-group" style="margin-bottom:0;"><input type="email" id="form-email" placeholder="Email *"
+          autocomplete="email"></div>
     </div>
-    <button class="submit-btn" onclick="submitAllocation()">Submit Order</button>
+    <div class="input-group"><input type="text" id="form-address" placeholder="Shipping Address *"
+        autocomplete="street-address"></div>
+    <div class="input-group"><input type="text" id="form-postal" placeholder="Postal Code &amp; City *"
+        autocomplete="postal-code"></div>
+  </div>
+
+  <!-- Sticky footer: totals + submit -->
+  <div class="footer-bar">
+    <div class="footer-main">
+      <div class="total-box">
+        <div class="total-row">
+          Ex VAT: <span id="total-ex-vat">€0.00</span> &nbsp;|&nbsp; Inc VAT: <span id="total-inc-vat"
+            style="color:#d4af37;">€0.00</span>
+        </div>
+      </div>
+      <button class="submit-btn" id="submit-btn" onclick="submitAllocation()">Submit Order</button>
+    </div>
+    <div class="submit-helper" id="submit-helper" style="display:none;">Resubmit to update order.</div>
+    <div class="submit-error" id="submit-error">Something went wrong, please try again or contact us on WhatsApp if the
+      error persists.</div>
   </div>
 
   <script>
-    // Paste your deployed Google Web App URL here
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5JyabcgIzuxs1xVng8xxmJbYfyUsD0hoyC0FHrFxkfb4i1U80ijSB6V6iv-YMGY4Y/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_fA0znRlv1VMpFCUlJgpOX8YlU3OBSM_FCU5e2V-sCNEV6ACsDQI688a604gFZQoA/exec";
+    const LS_CART_KEY = 'tsss_cart';
+    const LS_FORM_KEY = 'tsss_form';
 
+    // ── Wine data ─────────────────────────────────────────────────────────
     const wineData = [
       { "bodega": "Alonso", "range": "VELO FLOR", "type": "Manzanilla", "cl": "75", "price": 29.7 },
       { "bodega": "Alonso", "range": "VELO FLOR", "type": "Manzanilla", "cl": "150", "price": 90.0 },
@@ -399,28 +601,43 @@
     ];
 
     const bodegaDescriptions = {
-      "Alonso": "Boutique producer specialising in rare, very old Sherries. Made in historic solera systems purchased from legendary, defunct Sherry houses",
+      "Alonso": "Boutique producer specialising in rare, very old Sherries. Made in historic solera systems purchased from legendary, defunct Sherry houses.",
       "Barrialto": "Micro winery from Sanlúcar. On perhaps 40 square meters Rafael Rodríguez makes incredibly elegant still wines from old Palomino vines in ex-Manzanilla casks.",
       "del Río": "On the mouth of the Guadalquivir, Luis and his family are making some of the most stylish, sophisticated aged Manzanillas of the region.",
       "Barbadillo": "A classic Sanlúcar Bodega turned progressive. Their experimental and remarkable expressions are a delight for every curious wine drinker."
     };
 
+    // ── State ─────────────────────────────────────────────────────────────
     let orderQuantities = {};
-    const listContainer = document.getElementById('allocation-list');
-    const grouped = {};
+    let activeFilters = { bodega: new Set(), type: new Set(), size: new Set() };
 
+    // ── Group wines by bodega ─────────────────────────────────────────────
+    const grouped = {};
     wineData.forEach((wine, idx) => {
       if (!grouped[wine.bodega]) grouped[wine.bodega] = [];
       grouped[wine.bodega].push({ ...wine, id: idx });
     });
 
+    // ── Render product list ───────────────────────────────────────────────
+    const listContainer = document.getElementById('allocation-list');
+
     for (const bodega in grouped) {
-      const desc = bodegaDescriptions[bodega] !== undefined ? bodegaDescriptions[bodega] : `Add context here for Bodegas ${bodega}...`;
+      const desc = bodegaDescriptions[bodega] || '';
       const section = document.createElement('div');
-      section.innerHTML = `
-        <div class="section-title">Bodegas ${bodega}</div>
-        ${desc ? `<p class="bodega-desc">${desc}</p>` : ''}
-      `;
+      section.dataset.bodega = bodega;
+
+      const titleEl = document.createElement('div');
+      titleEl.className = 'section-title';
+      titleEl.textContent = `Bodegas ${bodega}`;
+      section.appendChild(titleEl);
+
+      if (desc) {
+        const descEl = document.createElement('p');
+        descEl.className = 'bodega-desc';
+        descEl.textContent = desc;
+        section.appendChild(descEl);
+      }
+
       const grid = document.createElement('div');
       grid.className = 'grid-container';
 
@@ -438,6 +655,9 @@
       grouped[bodega].forEach(wine => {
         const row = document.createElement('div');
         row.className = 'wine-row';
+        row.dataset.wineId = wine.id;
+        row.dataset.type = wine.type;
+        row.dataset.size = wine.cl;
         row.innerHTML = `
           <div class="wine-details">
             ${wine.range} <span class="wine-meta">(${wine.type}, ${wine.cl}cl)</span>
@@ -445,40 +665,130 @@
           <div class="right-controls">
             <div class="wine-price">&euro;${wine.price.toFixed(2)}</div>
             <div class="qty-container">
-              <button class="qty-btn" onclick="updateQty(${wine.id}, -1)">&minus;</button>
-              <input type="number" class="qty-val" id="qty-${wine.id}" min="0" value="0" oninput="handleInputQty(${wine.id}, this.value)" onblur="sanitizeInputQty(this, ${wine.id})">
-              <button class="qty-btn" onclick="updateQty(${wine.id}, 1)">&plus;</button>
+              <button class="qty-btn" onclick="updateQty(${wine.id}, -1)" aria-label="Decrease quantity">&minus;</button>
+              <input type="number" class="qty-val" id="qty-${wine.id}" min="0" value="0"
+                oninput="handleInputQty(${wine.id}, this.value)"
+                onblur="sanitizeInputQty(this, ${wine.id})">
+              <button class="qty-btn" onclick="updateQty(${wine.id}, 1)" aria-label="Increase quantity">&plus;</button>
             </div>
           </div>
         `;
         grid.appendChild(row);
       });
+
       section.appendChild(grid);
       listContainer.appendChild(section);
     }
 
+    // ── Build filter chips ────────────────────────────────────────────────
+    const bodegas = Object.keys(grouped);
+    // Custom sorted types: Still wine goes before Manzanilla. Manzanilla pasada is removed/merged.
+    const types = ['Still wine', 'Manzanilla', 'Amontillado', 'Palo Cortado', 'Oloroso', 'Medium', 'Cream', 'Moscatel', 'Pedro Ximénez', 'Vinagre'];
+    const sizes = [...new Set(wineData.map(w => w.cl))].sort((a, b) => parseFloat(a) - parseFloat(b));
+
+    function appendFilterGroup(items, filterKey) {
+      const container = document.getElementById('filters-bar');
+
+      items.forEach(item => {
+        const chip = document.createElement('button');
+        chip.className = 'chip';
+        chip.textContent = filterKey === 'size' ? `${item}cl` : item;
+        chip.dataset.value = item;
+        chip.setAttribute('aria-pressed', 'false');
+        chip.addEventListener('click', () => {
+          const isActive = activeFilters[filterKey].has(item);
+          if (isActive) {
+            activeFilters[filterKey].delete(item);
+            chip.classList.remove('active');
+            chip.setAttribute('aria-pressed', 'false');
+          } else {
+            activeFilters[filterKey].add(item);
+            chip.classList.add('active');
+            chip.setAttribute('aria-pressed', 'true');
+          }
+          applyFilters();
+        });
+        container.appendChild(chip);
+      });
+    }
+
+    appendFilterGroup(bodegas, 'bodega');
+
+    const sep1 = document.createElement('span');
+    sep1.className = 'filter-separator';
+    sep1.textContent = '|';
+    document.getElementById('filters-bar').appendChild(sep1);
+
+    appendFilterGroup(types, 'type');
+
+    const sep2 = document.createElement('span');
+    sep2.className = 'filter-separator';
+    sep2.textContent = '|';
+    document.getElementById('filters-bar').appendChild(sep2);
+
+    appendFilterGroup(sizes, 'size');
+
+    function applyFilters() {
+      document.querySelectorAll('[data-bodega]').forEach(section => {
+        const bodega = section.dataset.bodega;
+        let sectionVisible = false;
+
+        section.querySelectorAll('.wine-row').forEach(row => {
+          const matchBodega = activeFilters.bodega.size === 0 || activeFilters.bodega.has(bodega);
+          
+          let rowType = row.dataset.type;
+          if (rowType === 'Manzanilla pasada') {
+            rowType = 'Manzanilla';
+          }
+          
+          const matchType = activeFilters.type.size === 0 || activeFilters.type.has(rowType);
+          const matchSize = activeFilters.size.size === 0 || activeFilters.size.has(row.dataset.size);
+          const visible = matchBodega && matchType && matchSize;
+          row.style.display = visible ? '' : 'none';
+          if (visible) sectionVisible = true;
+        });
+
+        section.style.display = sectionVisible ? '' : 'none';
+      });
+    }
+
+    // ── Quantity helpers ──────────────────────────────────────────────────
     function updateQty(id, delta) {
       let current = orderQuantities[id] || 0;
-      current += delta;
-      if (current < 0) current = 0;
+      current = Math.max(0, current + delta);
       orderQuantities[id] = current;
-      document.getElementById(`qty-${id}`).value = current;
+      const input = document.getElementById(`qty-${id}`);
+      if (input) input.value = current;
+      updateRowHighlight(id);
       calculateTotal();
+      renderOrderSummary();
+      saveCart();
     }
 
     function handleInputQty(id, value) {
       let val = parseInt(value, 10);
       if (isNaN(val) || val < 0) val = 0;
       orderQuantities[id] = val;
+      updateRowHighlight(id);
       calculateTotal();
+      renderOrderSummary();
+      saveCart();
     }
 
     function sanitizeInputQty(el, id) {
       let val = parseInt(el.value, 10);
       if (isNaN(val) || val < 0) val = 0;
       el.value = val;
+      orderQuantities[id] = val;
     }
 
+    function updateRowHighlight(id) {
+      const row = document.querySelector(`.wine-row[data-wine-id="${id}"]`);
+      if (!row) return;
+      row.classList.toggle('has-qty', (orderQuantities[id] || 0) > 0);
+    }
+
+    // ── Totals ────────────────────────────────────────────────────────────
     function calculateTotal() {
       let totalExVat = 0;
       for (const id in orderQuantities) {
@@ -486,22 +796,107 @@
           totalExVat += orderQuantities[id] * wineData[id].price;
         }
       }
-      let vatAmount = totalExVat * 0.21;
-      let totalIncVat = totalExVat + vatAmount;
-
-      document.getElementById('total-ex-vat').innerText = `€${totalExVat.toFixed(2)}`;
-      document.getElementById('total-inc-vat').innerText = `€${totalIncVat.toFixed(2)}`;
+      document.getElementById('total-ex-vat').textContent = `€${totalExVat.toFixed(2)}`;
+      document.getElementById('total-inc-vat').textContent = `€${(totalExVat * 1.21).toFixed(2)}`;
     }
 
+    // ── Order summary table ───────────────────────────────────────────────
+    function renderOrderSummary() {
+      const tbody = document.getElementById('order-table-body');
+      const summary = document.getElementById('order-summary');
+      tbody.innerHTML = '';
+      let hasItems = false;
+
+      wineData.forEach((wine, id) => {
+        const qty = orderQuantities[id] || 0;
+        if (qty > 0) {
+          hasItems = true;
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>
+              <div class="td-wine">${wine.range}</div>
+              <div class="td-meta">${wine.type}, ${wine.cl}cl</div>
+            </td>
+            <td class="td-qty">${qty}</td>
+            <td class="td-total">€${(qty * wine.price).toFixed(2)}</td>
+          `;
+          tbody.appendChild(tr);
+        }
+      });
+
+      summary.style.display = hasItems ? '' : 'none';
+    }
+
+    // ── localStorage ──────────────────────────────────────────────────────
+    function saveCart() {
+      try { localStorage.setItem(LS_CART_KEY, JSON.stringify(orderQuantities)); } catch (e) { }
+    }
+
+    function saveForm() {
+      try {
+        localStorage.setItem(LS_FORM_KEY, JSON.stringify({
+          name: document.getElementById('form-name').value,
+          company: document.getElementById('form-company').value,
+          phone: document.getElementById('form-phone').value,
+          email: document.getElementById('form-email').value,
+          address: document.getElementById('form-address').value,
+          postal: document.getElementById('form-postal').value,
+        }));
+      } catch (e) { }
+    }
+
+    function restoreState() {
+      try {
+        const savedCart = localStorage.getItem(LS_CART_KEY);
+        if (savedCart) {
+          orderQuantities = JSON.parse(savedCart);
+          for (const id in orderQuantities) {
+            const input = document.getElementById(`qty-${id}`);
+            if (input) input.value = orderQuantities[id];
+            updateRowHighlight(parseInt(id, 10));
+          }
+          calculateTotal();
+          renderOrderSummary();
+        }
+      } catch (e) { }
+
+      try {
+        const savedForm = localStorage.getItem(LS_FORM_KEY);
+        if (savedForm) {
+          const fd = JSON.parse(savedForm);
+          document.getElementById('form-name').value = fd.name || '';
+          document.getElementById('form-company').value = fd.company || '';
+          document.getElementById('form-phone').value = fd.phone || '';
+          document.getElementById('form-email').value = fd.email || '';
+          document.getElementById('form-address').value = fd.address || '';
+          document.getElementById('form-postal').value = fd.postal || '';
+        }
+      } catch (e) { }
+    }
+
+    ['form-name', 'form-company', 'form-phone', 'form-email', 'form-address', 'form-postal'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', saveForm);
+    });
+
+    restoreState();
+
+    // ── Submit ────────────────────────────────────────────────────────────
     function submitAllocation() {
       const name = document.getElementById('form-name').value.trim();
       const company = document.getElementById('form-company').value.trim();
-      const contact = document.getElementById('form-contact').value.trim();
+      const phone = document.getElementById('form-phone').value.trim();
+      const email = document.getElementById('form-email').value.trim();
       const address = document.getElementById('form-address').value.trim();
       const postal = document.getElementById('form-postal').value.trim();
 
-      if (!name || !contact || !address || !postal) {
+      if (!name || !address || !postal) {
         alert('Please complete all required fields (*).');
+        return;
+      }
+
+      if (!phone || !email) {
+        alert('Please fill in your contact details before submitting.');
         return;
       }
 
@@ -520,36 +915,45 @@
         return;
       }
 
-      const btn = document.querySelector('.submit-btn');
-      btn.innerText = 'Sending...';
+      const btn = document.getElementById('submit-btn');
+      const errorEl = document.getElementById('submit-error');
+      const helperEl = document.getElementById('submit-helper');
+
+      btn.textContent = 'Sending…';
       btn.disabled = true;
+      errorEl.style.display = 'none';
+      helperEl.style.display = 'none';
 
       const payload = {
-        name: name,
-        company: company,
-        contact: contact,
-        address: address,
-        postal: postal,
+        name, company, phone, email, address, postal,
         itemsList: itemsArray.join(', '),
-        totalExVat: totalExVat,
+        totalExVat,
         vat: totalExVat * 0.21,
         totalIncVat: totalExVat * 1.21
       };
 
       fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload)
       })
-        .then(() => {
-          alert('Thank you! Your selection has been submitted successfully.');
-          location.reload();
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Thank you! Your selection has been submitted successfully.');
+            btn.textContent = 'Submitted';
+            btn.classList.add('submitted');
+            btn.disabled = false;
+            helperEl.style.display = 'block';
+          } else {
+            throw new Error(data.message || 'Unknown error');
+          }
         })
-        .catch(err => {
-          alert('There was a submission error. Please try again.');
-          btn.innerText = 'Submit Order';
+        .catch(() => {
+          btn.textContent = 'Submit Order';
+          btn.classList.remove('submitted');
           btn.disabled = false;
+          errorEl.style.display = 'block';
         });
     }
   </script>
